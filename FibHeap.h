@@ -17,8 +17,8 @@ class FiboHeap
 public:
     defender_soldier_node* min_node;
     int num_of_nodes;
-	FiboHeap();
-	~FiboHeap();
+    FiboHeap();
+    ~FiboHeap();
     void Insert(int key);
     void mergeToRoot(defender_soldier_node* t);
 
@@ -28,14 +28,16 @@ public:
 FiboHeap::FiboHeap()
 {
 
-    min_node->child = nullptr;
-    min_node->mark = false;
-    min_node->leftSibling = min_node;
-    min_node->rightSibling = min_node;
-    min_node->parent = nullptr;
-    min_node->degree = 0;
-    min_node->sld_power = 0;
-    
+    //min_node->child = nullptr;
+    //min_node->mark = false;
+    //min_node->leftSibling = min_node;
+    //min_node->rightSibling = min_node;
+    //min_node->parent = nullptr;
+    //min_node->degree = 0;
+    //min_node->sld_power = 0;
+
+    //min_node = nullptr;
+    //num_of_nodes = 0;
     min_node = nullptr;
     num_of_nodes = 0;
 }
@@ -46,27 +48,30 @@ FiboHeap::~FiboHeap()
 
 inline void FiboHeap::Insert(int key)
 {
-    if (this->min_node->sld_power == 0)
-    {
-        this->min_node->sld_power == key;
-    }
-    else
-    {
-        defender_soldier_node* t = new defender_soldier_node;
-        t->child = nullptr;
-        t->degree = 0;
-        t->mark = false;
-        t->parent = nullptr;
-        t->sld_power = key;
-        t->leftSibling = t;
-        t->rightSibling = t;
-        this->mergeToRoot(t);
-    }
-    num_of_nodes++;
+    defender_soldier_node* t = new defender_soldier_node;
+    t->child = nullptr;
+    t->degree = 0;
+    t->mark = false;
+    t->parent = nullptr;
+    t->sld_power = key;
+    t->leftSibling = t;
+    t->rightSibling = t;
+    this->mergeToRoot(t);
 }
 
 inline void FiboHeap::mergeToRoot(defender_soldier_node* t)
 {
+    if (this->min_node == nullptr)
+    {
+        min_node = new defender_soldier_node;
+        min_node->child = nullptr;
+        min_node->mark = false;
+        min_node->leftSibling = min_node;
+        min_node->rightSibling = min_node;
+        min_node->parent = nullptr;
+        min_node->degree = 0;
+        min_node->sld_power = 0;
+    }
     //if (t->leftSibling == t)
     //{
     //    t->leftSibling = this->min_node->leftSibling;
@@ -86,6 +91,7 @@ inline void FiboHeap::mergeToRoot(defender_soldier_node* t)
     t->leftSibling = this->min_node->leftSibling;
     a->rightSibling = min_node;
     this->min_node->leftSibling = a;
+    this->num_of_nodes++;
 }
 inline defender_soldier_node* FiboHeap::childCircute(defender_soldier_node* t)
 {
