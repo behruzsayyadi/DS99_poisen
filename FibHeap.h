@@ -19,10 +19,13 @@ public:
     int num_of_nodes;
     FiboHeap();
     ~FiboHeap();
-    void Insert(int key);
-    void mergeToRoot(defender_soldier_node* t);
 
+
+    void Insert(int key);
+    void mergeToCircute(defender_soldier_node* our_node, defender_soldier_node* circute_node);
     defender_soldier_node* childCircute(defender_soldier_node* t);
+
+    defender_soldier_node* popMin();
 };
 
 FiboHeap::FiboHeap()
@@ -68,12 +71,13 @@ inline void FiboHeap::Insert(int key)
     t->sld_power = key;
     t->leftSibling = t;
     t->rightSibling = t;
-    this->mergeToRoot(t);
+    this->mergeToCircute(t, min_node);
+    this->num_of_nodes++;
+
 }
 
-inline void FiboHeap::mergeToRoot(defender_soldier_node* t)
+inline void FiboHeap::mergeToCircute(defender_soldier_node* our_node, defender_soldier_node* circute_node)
 {
-    
     //if (t->leftSibling == t)
     //{
     //    t->leftSibling = this->min_node->leftSibling;
@@ -85,16 +89,16 @@ inline void FiboHeap::mergeToRoot(defender_soldier_node* t)
     //{
     //    t->leftSibling->rightSibling = this->min_node;
     //    this->min_node->leftSibling->rightSibling = t;
-    //    this->min_node->leftSibling = t;
+    //    circute_node->min_node->leftSibling = t;
     //}
     defender_soldier_node* a;
-    a = t->leftSibling;
-    this->min_node->leftSibling->rightSibling = t;
-    t->leftSibling = this->min_node->leftSibling;
-    a->rightSibling = min_node;
-    this->min_node->leftSibling = a;
-    this->num_of_nodes++;
+    a = our_node->leftSibling;
+    circute_node->leftSibling->rightSibling = our_node;
+    our_node->leftSibling = circute_node->leftSibling;
+    a->rightSibling = circute_node;
+    circute_node->leftSibling = a;
 }
+
 inline defender_soldier_node* FiboHeap::childCircute(defender_soldier_node* t)
 {
     defender_soldier_node* circute = t;
@@ -107,4 +111,10 @@ inline defender_soldier_node* FiboHeap::childCircute(defender_soldier_node* t)
         circute = circute->leftSibling;
     }
     return circute;
+}
+
+inline defender_soldier_node* FiboHeap::popMin()
+{
+
+    return NULL;
 }
