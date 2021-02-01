@@ -48,6 +48,18 @@ FiboHeap::~FiboHeap()
 
 inline void FiboHeap::Insert(int key)
 {
+    if (this->min_node == nullptr)
+    {
+        min_node = new defender_soldier_node;
+        min_node->child = nullptr;
+        min_node->mark = false;
+        min_node->leftSibling = min_node;
+        min_node->rightSibling = min_node;
+        min_node->parent = nullptr;
+        min_node->degree = 0;
+        min_node->sld_power = key;
+        return;
+    }
     defender_soldier_node* t = new defender_soldier_node;
     t->child = nullptr;
     t->degree = 0;
@@ -61,17 +73,7 @@ inline void FiboHeap::Insert(int key)
 
 inline void FiboHeap::mergeToRoot(defender_soldier_node* t)
 {
-    if (this->min_node == nullptr)
-    {
-        min_node = new defender_soldier_node;
-        min_node->child = nullptr;
-        min_node->mark = false;
-        min_node->leftSibling = min_node;
-        min_node->rightSibling = min_node;
-        min_node->parent = nullptr;
-        min_node->degree = 0;
-        min_node->sld_power = 0;
-    }
+    
     //if (t->leftSibling == t)
     //{
     //    t->leftSibling = this->min_node->leftSibling;
